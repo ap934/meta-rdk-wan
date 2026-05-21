@@ -4,7 +4,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 # Please use below part only for official release and release candidates
-#GIT_TAG = "v1.0.0"
+GIT_TAG = "v1.0.0"
 
 DEPENDS = "rdk-logger rbus rdkb-halif-epon hal-epon telemetry"
 RDEPENDS_${PN} = "hal-epon telemetry"
@@ -12,9 +12,9 @@ RDEPENDS_${PN} = "hal-epon telemetry"
 require recipes-ccsp/ccsp/ccsp_common.inc
 
 # Please use below part only for official release and release candidates
-SRC_URI := "git://github.com/rdkcentral/epon-manager.git;branch=feature/telemetry-docs;protocol=https;name=EponManager;"
-#PV = "${GIT_TAG}+git${SRCPV}"
-SRCREV = "${AUTOREV}"
+SRC_URI := "git://github.com/rdkcentral/epon-manager.git;branch=releases/1.0.0-main;protocol=https;name=EponManager;tag=${GIT_TAG}"
+PV = "${GIT_TAG}+git${SRCPV}"
+#SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
