@@ -6,8 +6,10 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 # Please use below part only for official release and release candidates
 GIT_TAG = "v1.0.0"
 
-DEPENDS = "rdk-logger rbus rdkb-halif-epon hal-epon telemetry"
-RDEPENDS_${PN} = "hal-epon telemetry"
+DEPENDS = "rdk-logger rbus rdkb-halif-epon hal-epon"
+DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'telemetry2_0', 'telemetry', '', d)}"
+RDEPENDS_${PN} = "hal-epon"
+RDEPENDS_${PN}_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'telemetry2_0', 'telemetry', '', d)}"
 
 require recipes-ccsp/ccsp/ccsp_common.inc
 
@@ -28,7 +30,9 @@ CFLAGS += " \
     -Wno-error=switch \
     "
 
-LDFLAGS += " -lrbus -lrdkloggers -lhal_epon -ltelemetry_msgsender"
+LDFLAGS += " -lrbus -lrdkloggers -lhal_epon"
+LDFLAGS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'telemetry2_0', '-ltelemetry_msgsender', '', d)}"
+CFLAGS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'telemetry2_0', '-DENABLE_FEATURE_TELEMETRY2_0', '', d)}"
 
 # Enable HAL mock library build for integration testing
 # When --enable-tests is set, HAL mock library is built and used
