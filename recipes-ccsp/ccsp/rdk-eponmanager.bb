@@ -31,7 +31,6 @@ CFLAGS += " \
     "
 
 LDFLAGS += " -lrbus -lrdkloggers -lhal_epon"
-LDFLAGS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'telemetry2_0', '-ltelemetry_msgsender', '', d)}"
 CFLAGS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'telemetry2_0', '-DENABLE_FEATURE_TELEMETRY2_0', '', d)}"
 
 # Enable HAL mock library build for integration testing
@@ -39,6 +38,7 @@ CFLAGS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'telemetry2_0', '-DENA
 # When --enable-tests is disabled, the actual HAL library (libhal_epon) is linked
 ENABLE_TESTS ?= "--disable-tests"
 EXTRA_OECONF += "${ENABLE_TESTS}"
+EXTRA_OECONF_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'telemetry2_0', '--enable-telemetry2-0', '--disable-telemetry2-0', d)}"
 
 # Systemd service
 SYSTEMD_SERVICE_${PN} = "rdkeponmanager.service"
